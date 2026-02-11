@@ -67,7 +67,9 @@ struct FeatherSESMailTestSuite {
         )
         let client = SESMailClient(
             ses: ses,
-            encoder: RawMailEncoder(headerDateEncodingStrategy: formatDateHeader)
+            encoder: RawMailEncoder(
+                headerDateEncodingStrategy: formatDateHeader
+            )
         )
 
         try await closure(client)
