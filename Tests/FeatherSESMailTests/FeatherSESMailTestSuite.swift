@@ -67,7 +67,7 @@ struct FeatherSESMailTestSuite {
         )
         let client = SESMailClient(
             ses: ses,
-            headerDate: formatDateHeader
+            encoder: RawMailEncoder(headerDateEncodingStrategy: formatDateHeader)
         )
 
         try await closure(client)
@@ -152,7 +152,7 @@ struct FeatherSESMailTestSuite {
                         as? MailError,
                         validationError == .invalidSender
                     {
-                        #expect(true)
+                        return
                     }
                     else {
                         Issue.record(
@@ -211,7 +211,7 @@ struct FeatherSESMailTestSuite {
                     if case let .custom(message) = error as? MailError,
                         message.hasPrefix("AWSErrorType - ")
                     {
-                        #expect(true)
+                        return
                     }
                     else {
                         Issue.record(

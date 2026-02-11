@@ -41,29 +41,22 @@ public struct SESMailClient: MailClient, Sendable {
     ///
     /// - Parameters:
     ///   - ses: A configured `SESv2` client instance.
-    ///   - headerDate: Date header value provider used by the default encoder.
-    ///   - validator: Validator applied before delivery.
     ///   - encoder: Encoder used to convert mails into raw MIME messages.
+    ///   - validator: Validator applied before delivery.
     ///   - logger: Logger used for SES request and transport logging.
     public init(
         ses: SESv2,
-        headerDate: @escaping @Sendable () -> String,
+        encoder: (any MailEncoder),
         validator: MailValidator = BasicMailValidator(
             maxTotalAttachmentSize: 7_500_000
         ),
-        encoder: (any MailEncoder)? = nil,
         logger: Logger = .init(label: "feather.mail.ses")
     ) {
         self.ses = ses
         self.client = ses.client
+        self.encoder = encoder
         self.validator = validator
-        self.encoder =
-            encoder
-            ?? RawMailEncoder(
-                headerDateEncodingStrategy: headerDate
-            )
         self.logger = logger
-
     }
 
     /// Validates a mail using the configured validator.
