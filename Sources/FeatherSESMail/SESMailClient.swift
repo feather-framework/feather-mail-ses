@@ -46,7 +46,7 @@ public struct SESMailClient: MailClient, Sendable {
     ///   - logger: Logger used for SES request and transport logging.
     public init(
         ses: SESv2,
-        encoder: (any MailEncoder),
+        encoder: any MailEncoder,
         validator: MailValidator = BasicMailValidator(
             maxTotalAttachmentSize: 7_500_000
         ),
