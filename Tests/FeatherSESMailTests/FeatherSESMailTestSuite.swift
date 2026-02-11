@@ -5,11 +5,7 @@
 //  Created by Tibor Bödecs on 2023. 01. 16..
 //
 
-#if canImport(FoundationEssentials)
-import FoundationEssentials
-#else
 import Foundation
-#endif
 import Testing
 import FeatherMail
 import FeatherSESMail
@@ -25,6 +21,13 @@ struct FeatherSESMailTestSuite {
 
     // MARK: - Helpers
 
+    private func formatDateHeader() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
+        return dateFormatter.string(from: Date())
+    }
+
     private func buildSES(
         accessKeyId: String? = nil,
         secretAccessKey: String? = nil,
@@ -35,7 +38,7 @@ struct FeatherSESMailTestSuite {
                 accessKeyId: accessKeyId ?? config.accessKeyId,
                 secretAccessKey: secretAccessKey ?? config.secretAccessKey
             ),
-            logger: .init(label: "feather.ses.mail")
+            logger: .init(label: "feather.mail.ses")
         )
 
         let ses = SESv2(
@@ -62,7 +65,12 @@ struct FeatherSESMailTestSuite {
             secretAccessKey: secretAccessKey,
             endpoint: endpoint
         )
-        let client = SESMailClient(ses: ses)
+        let client = SESMailClient(
+            ses: ses,
+            encoder: RawMailEncoder(
+                headerDateEncodingStrategy: formatDateHeader
+            )
+        )
 
         try await closure(client)
         try await awsClient.shutdown()
@@ -146,7 +154,7 @@ struct FeatherSESMailTestSuite {
                         as? MailError,
                         validationError == .invalidSender
                     {
-                        #expect(true)
+                        return
                     }
                     else {
                         Issue.record(
@@ -205,7 +213,7 @@ struct FeatherSESMailTestSuite {
                     if case let .custom(message) = error as? MailError,
                         message.hasPrefix("AWSErrorType - ")
                     {
-                        #expect(true)
+                        return
                     }
                     else {
                         Issue.record(

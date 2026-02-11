@@ -5,7 +5,6 @@
 //  Created by gerp83 on 2025. 01. 16..
 //
 
-import Foundation
 import FeatherMail
 import SotoCore
 import SotoSESv2
@@ -26,8 +25,8 @@ public struct SESMailClient: MailClient, Sendable {
     /// Validator used to validate mails before sending.
     private let validator: MailValidator
 
-    /// Encoder used to convert mails into SES-compatible MIME messages.
-    private let encoder = SESMailEncoder()
+    /// Encoder used to convert mails into raw MIME messages.
+    private let encoder: any MailEncoder
 
     /// Amazon SES client used for mail delivery.
     private let ses: SESv2
@@ -42,10 +41,12 @@ public struct SESMailClient: MailClient, Sendable {
     ///
     /// - Parameters:
     ///   - ses: A configured `SESv2` client instance.
+    ///   - encoder: Encoder used to convert mails into raw MIME messages.
     ///   - validator: Validator applied before delivery.
     ///   - logger: Logger used for SES request and transport logging.
     public init(
         ses: SESv2,
+        encoder: any MailEncoder,
         validator: MailValidator = BasicMailValidator(
             maxTotalAttachmentSize: 7_500_000
         ),
@@ -53,6 +54,7 @@ public struct SESMailClient: MailClient, Sendable {
     ) {
         self.ses = ses
         self.client = ses.client
+        self.encoder = encoder
         self.validator = validator
         self.logger = logger
     }
@@ -81,7 +83,8 @@ public struct SESMailClient: MailClient, Sendable {
             throw .validation(error)
         }
 
-        let encodedData = try encoder.encode(mail)
+        let raw = try encoder.encode(mail: mail)
+        let encodedData = Array(raw.utf8).base64EncodedString()
 
         let rawMessage = SESv2.RawMessage(
             data: AWSBase64Data.base64(encodedData)
@@ -107,16 +110,8 @@ public struct SESMailClient: MailClient, Sendable {
     /// Maps Amazon SES errors to `MailError` values.
     private func mapSESError(_ error: Error) -> MailError {
 
-        // MARK: - SES service-level errors (returned by SES)
-
         if let awsError = error as? AWSErrorType {
             return .custom("AWSErrorType - \(awsError.errorCode)")
-        }
-
-        // MARK: - Transport / networking
-
-        if error is URLError {
-            return .custom("SES - Transport/networking error")
         }
 
         return .unknown(error)

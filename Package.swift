@@ -37,7 +37,7 @@ let package = Package(
         // [docc-plugin-placeholder]
         .package(url: "https://github.com/soto-project/soto-core", from: "7.0.0"),
         .package(url: "https://github.com/soto-project/soto-codegenerator", from: "7.0.0"),
-        .package(url: "https://github.com/feather-framework/feather-mail", .upToNextMinor(from: "1.0.0-beta.1")),
+        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-beta.2"),
     ],
     targets: [
         .target(
