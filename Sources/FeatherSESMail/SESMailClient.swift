@@ -63,7 +63,7 @@ public struct SESMailClient: MailClient, Sendable {
                 headerDateEncodingStrategy: headerDate
             )
         self.logger = logger
-        
+
     }
 
     /// Validates a mail using the configured validator.
