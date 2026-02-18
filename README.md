@@ -1,8 +1,12 @@
-# Feather SES Mail
+# Feather Mail SES 
 
 Amazon SES-backed mail client for Feather Mail.
 
-[![Release: 1.0.0-beta.2](https://img.shields.io/badge/Release-1.0.0--beta.2-F05138)](https://github.com/feather-framework/feather-mail-ses/releases/tag/1.0.0-beta.2)
+[
+    ![Release: 1.0.0-beta.3](https://img.shields.io/badge/Release-1.0.0--beta.3-F05138)
+](
+    https://github.com/feather-framework/feather-mail-ses/releases/tag/1.0.0-beta.3
+)
 
 ## Features
 
@@ -30,7 +34,7 @@ Amazon SES-backed mail client for Feather Mail.
 Use Swift Package Manager; add the dependency to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/feather-framework/feather-mail-ses", exact: "1.0.0-beta.2"),
+.package(url: "https://github.com/feather-framework/feather-mail-ses", exact: "1.0.0-beta.3"),
 ```
 
 Then add `FeatherMailSES` to your target dependencies:
@@ -41,7 +45,11 @@ Then add `FeatherMailSES` to your target dependencies:
 
 ## Usage
 
-[![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)](https://feather-framework.github.io/feather-mail-ses/)
+[
+    ![DocC API documentation](https://img.shields.io/badge/DocC-API_documentation-F05138)
+](
+    https://feather-framework.github.io/feather-mail-ses/
+)
 
 API documentation is available at the following link.
 
@@ -51,8 +59,8 @@ API documentation is available at the following link.
 ## Related repositories
 
 - [Feather Mail](https://github.com/feather-framework/feather-mail)
-- [Feather SMTP Mail](https://github.com/feather-framework/feather-smtp-mail)
-- [Feather Memory Mail](https://github.com/feather-framework/feather-memory-mail)
+- [Feather Mail SMTP](https://github.com/feather-framework/feather-mail-smtp)
+- [Feather Mail Ephemeral](https://github.com/feather-framework/feather-mail-ephemeral)
 
 ## Development
 
