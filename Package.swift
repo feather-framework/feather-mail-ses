@@ -10,7 +10,7 @@ var defaultSwiftSettings: [SwiftSetting] = [
     // https://forums.swift.org/t/experimental-support-for-lifetime-dependencies-in-swift-6-2-and-beyond/78638
     .enableExperimentalFeature("Lifetimes"),
     // https://github.com/swiftlang/swift/pull/65218
-    .enableExperimentalFeature("AvailabilityMacro=FeatherMailSES:macOS 15, iOS 18, watchOS 11, tvOS 18, visionOS 2"),
+    .enableExperimentalFeature("AvailabilityMacro=featherMailSES:macOS 15, iOS 18, watchOS 11, tvOS 18, visionOS 2"),
 ]
 
 #if compiler(>=6.2)
@@ -36,7 +36,7 @@ let package = Package(
         // [docc-plugin-placeholder]
         .package(url: "https://github.com/soto-project/soto-core", from: "7.0.0"),
         .package(url: "https://github.com/soto-project/soto-codegenerator", from: "7.0.0"),
-        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-beta.2"),
+        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-beta.3"),
     ],
     targets: [
         .target(
