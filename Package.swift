@@ -3,7 +3,6 @@ import PackageDescription
 
 // NOTE: https://github.com/swift-server/swift-http-server/blob/main/Package.swift
 var defaultSwiftSettings: [SwiftSetting] = [
-    
     // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0441-formalize-language-mode-terminology.md
     .swiftLanguageMode(.v6),
     // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0444-member-import-visibility.md
@@ -11,7 +10,7 @@ var defaultSwiftSettings: [SwiftSetting] = [
     // https://forums.swift.org/t/experimental-support-for-lifetime-dependencies-in-swift-6-2-and-beyond/78638
     .enableExperimentalFeature("Lifetimes"),
     // https://github.com/swiftlang/swift/pull/65218
-    .enableExperimentalFeature("AvailabilityMacro=featherSESMail:macOS 15, iOS 18, watchOS 11, tvOS 18, visionOS 2"),
+    .enableExperimentalFeature("AvailabilityMacro=featherMailSES:macOS 15, iOS 18, watchOS 11, tvOS 18, visionOS 2"),
 ]
 
 #if compiler(>=6.2)
@@ -22,7 +21,7 @@ defaultSwiftSettings.append(
 #endif
 
 let package = Package(
-    name: "feather-ses-mail",
+    name: "feather-mail-ses",
     platforms: [
         .macOS(.v15),
         .iOS(.v18),
@@ -31,13 +30,13 @@ let package = Package(
         .visionOS(.v2),
     ],
     products: [
-        .library(name: "FeatherSESMail", targets: ["FeatherSESMail"]),
+        .library(name: "FeatherMailSES", targets: ["FeatherMailSES"]),
     ],
     dependencies: [
         // [docc-plugin-placeholder]
         .package(url: "https://github.com/soto-project/soto-core", from: "7.0.0"),
         .package(url: "https://github.com/soto-project/soto-codegenerator", from: "7.0.0"),
-        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-beta.2"),
+        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-beta.3"),
     ],
     targets: [
         .target(
@@ -51,7 +50,7 @@ let package = Package(
             ]
         ),
         .target(
-            name: "FeatherSESMail",
+            name: "FeatherMailSES",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .target(name: "SotoSESv2"),
@@ -60,10 +59,10 @@ let package = Package(
             swiftSettings: defaultSwiftSettings
         ),
         .testTarget(
-            name: "FeatherSESMailTests",
+            name: "FeatherMailSESTests",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .target(name: "FeatherSESMail"),
+                .target(name: "FeatherMailSES"),
             ],
             swiftSettings: defaultSwiftSettings
         ),

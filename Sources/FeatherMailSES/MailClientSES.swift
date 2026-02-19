@@ -1,6 +1,6 @@
 //
-//  SESMailClient.swift
-//  feather-ses-mail
+//  MailClientSES.swift
+//  feather-mail-ses
 //
 //  Created by gerp83 on 2025. 01. 16..
 //
@@ -12,7 +12,7 @@ import Logging
 
 /// A mail client implementation backed by Amazon SES.
 ///
-/// `SESMailClient` is intended to be initialized once during server startup
+/// `MailClientSES` is intended to be initialized once during server startup
 /// and reused for the lifetime of the application. It validates mails,
 /// encodes them into SES-compatible MIME messages, and delivers them using
 /// the Amazon SES v2 API.
@@ -20,7 +20,7 @@ import Logging
 /// The client owns an underlying `AWSClient` and an `SESv2` client instance.
 /// These resources are created during initialization and must be explicitly
 /// shut down when the server stops.
-public struct SESMailClient: MailClient, Sendable {
+public struct MailClientSES: MailClient, Sendable {
 
     /// Validator used to validate mails before sending.
     private let validator: MailValidator

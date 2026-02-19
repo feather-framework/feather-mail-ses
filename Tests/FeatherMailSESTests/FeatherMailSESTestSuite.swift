@@ -1,6 +1,6 @@
 //
-//  FeatherSESMailTestSuite.swift
-//  feather-ses-mail
+//  FeatherMailSESTestSuite.swift
+//  feather-mail-ses
 //
 //  Created by Tibor Bödecs on 2023. 01. 16..
 //
@@ -8,12 +8,12 @@
 import Foundation
 import Testing
 import FeatherMail
-import FeatherSESMail
+import FeatherMailSES
 import SotoCore
 import SotoSESv2
 
 @Suite
-struct FeatherSESMailTestSuite {
+struct FeatherMailSESTestSuite {
 
     // MARK: - Environment
 
@@ -58,14 +58,14 @@ struct FeatherSESMailTestSuite {
         accessKeyId: String? = nil,
         secretAccessKey: String? = nil,
         endpoint: String? = nil,
-        _ closure: @escaping @Sendable (SESMailClient) async throws -> Void
+        _ closure: @escaping @Sendable (MailClientSES) async throws -> Void
     ) async throws {
         let (ses, awsClient) = buildSES(
             accessKeyId: accessKeyId,
             secretAccessKey: secretAccessKey,
             endpoint: endpoint
         )
-        let client = SESMailClient(
+        let client = MailClientSES(
             ses: ses,
             encoder: RawMailEncoder(
                 headerDateEncodingStrategy: formatDateHeader
