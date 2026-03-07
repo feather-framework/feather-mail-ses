@@ -10,7 +10,7 @@ import Testing
 import FeatherMail
 import FeatherMailSES
 import SotoCore
-import SotoSESv2
+import SotoSESv2Mail
 
 @Suite
 struct FeatherMailSESTestSuite {
