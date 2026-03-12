@@ -6,11 +6,11 @@
 //
 
 import Foundation
-import Testing
 import FeatherMail
 import FeatherMailSES
+import FeatherGeneratedSES
 import SotoCore
-import SotoSESv2Mail
+import Testing
 
 @Suite
 struct FeatherMailSESTestSuite {

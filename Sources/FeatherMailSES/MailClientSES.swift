@@ -6,9 +6,9 @@
 //
 
 import FeatherMail
-import SotoCore
-import SotoSESv2Mail
+import FeatherGeneratedSES
 import Logging
+import SotoCore
 
 /// A mail client implementation backed by Amazon SES.
 ///

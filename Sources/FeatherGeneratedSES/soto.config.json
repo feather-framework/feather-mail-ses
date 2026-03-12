@@ -1,6 +1,6 @@
 {
   "services": {
-    "sesv2": {
+    "sesv2-2019-09-27": {
       "operations": [
         "sendEmail"
       ]
