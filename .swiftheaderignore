@@ -1,6 +1,5 @@
 .github/**
 docker/**
-Sources/SotoSESv2/sesv2-2019-09-27.json
 .docctargetlist
 .gitignore
 .swift-format
@@ -12,4 +11,5 @@ Makefile
 Package.swift
 Package.resolved
 README.md
-soto.config.json
+Sources/FeatherGeneratedSES/sesv2-2019-09-27.json
+Sources/FeatherGeneratedSES/soto.config.json

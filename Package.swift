@@ -40,7 +40,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SotoSESv2Mail",
+            name: "FeatherGeneratedSES",
             dependencies: [
                 .product(name: "SotoCore", package: "soto-core"),
             ],
@@ -53,7 +53,7 @@ let package = Package(
             name: "FeatherMailSES",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .target(name: "SotoSESv2Mail"),
+                .target(name: "FeatherGeneratedSES"),
                 .product(name: "SotoCore", package: "soto-core"),
             ],
             swiftSettings: defaultSwiftSettings
