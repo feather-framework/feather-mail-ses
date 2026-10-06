@@ -19,7 +19,7 @@ struct TestSESConfig {
     let to: String
 
     static func load() -> TestSESConfig {
-        // NOTE: Tests read from environment variables first and then fall back
+        // Tests read from environment variables first and then fall back
         // to hardcoded values below.
         //
         // Environment variables (preferred):
@@ -29,8 +29,7 @@ struct TestSESConfig {
         //   SES_FROM
         //   SES_TO
         //
-        // To run integration tests locally without env vars, fill in the values
-        // below. Keep secrets out of source control.
+        // Keep secrets out of source control.
         let env = ProcessInfo.processInfo.environment
         return TestSESConfig(
             accessKeyId: env["SES_ID"]!,

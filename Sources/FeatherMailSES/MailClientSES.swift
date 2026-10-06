@@ -5,8 +5,8 @@
 //  Created by gerp83 on 2025. 01. 16..
 //
 
-import FeatherMail
-import FeatherGeneratedSES
+public import FeatherMail
+public import FeatherSotoSES
 import Logging
 import SotoCore
 
@@ -23,7 +23,7 @@ import SotoCore
 public struct MailClientSES: MailClient, Sendable {
 
     /// Validator used to validate mails before sending.
-    private let validator: MailValidator
+    private let validator: any MailValidator
 
     /// Encoder used to convert mails into raw MIME messages.
     private let encoder: any MailEncoder
@@ -43,7 +43,7 @@ public struct MailClientSES: MailClient, Sendable {
     public init(
         ses: SESv2,
         encoder: any MailEncoder,
-        validator: MailValidator = BasicMailValidator(
+        validator: any MailValidator = BasicMailValidator(
             maxTotalAttachmentSize: 7_500_000
         )
     ) {
@@ -102,9 +102,9 @@ public struct MailClientSES: MailClient, Sendable {
     }
 
     /// Maps Amazon SES errors to `MailError` values.
-    private func mapSESError(_ error: Error) -> MailError {
+    private func mapSESError(_ error: any Error) -> MailError {
 
-        if let awsError = error as? AWSErrorType {
+        if let awsError = error as? any AWSErrorType {
             return .custom("AWSErrorType - \(awsError.errorCode)")
         }
 

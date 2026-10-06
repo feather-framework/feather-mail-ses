@@ -2,7 +2,7 @@
 
 Amazon SES-backed mail client for Feather Mail.
 
-[![Release:1.0.0-rc.1](https://img.shields.io/badge/Release-1.0.0--rc.1-F05138)](https://github.com/feather-framework/feather-mail-ses/releases/tag/1.0.0-rc.1)
+[![Release:1.0.0-rc.2](https://img.shields.io/badge/Release-1.0.0--rc.2-F05138)](https://github.com/feather-framework/feather-mail-ses/releases/tag/1.0.0-rc.2)
 
 ## Features
 
@@ -13,10 +13,10 @@ Amazon SES-backed mail client for Feather Mail.
 
 ## Requirements
 
-![Swift 6.1+](https://img.shields.io/badge/Swift-6%2E1%2B-F05138)
+![Swift 6.3+](https://img.shields.io/badge/Swift-6%2E3%2B-F05138)
 ![Platforms: Linux, macOS, iOS, tvOS, watchOS, visionOS](https://img.shields.io/badge/Platforms-Linux_%7C_macOS_%7C_iOS_%7C_tvOS_%7C_watchOS_%7C_visionOS-F05138)
 
-- Swift 6.1+
+- Swift 6.3+
 - Platforms:
   - Linux
   - macOS 15+
@@ -30,7 +30,7 @@ Amazon SES-backed mail client for Feather Mail.
 Use Swift Package Manager; add the dependency to your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/feather-framework/feather-mail-ses", exact: "1.0.0-rc.1"),
+.package(url: "https://github.com/feather-framework/feather-mail-ses", exact: "1.0.0-rc.2"),
 ```
 
 Then add `FeatherMailSES` to your target dependencies:
@@ -59,9 +59,12 @@ The package uses `Logger.current` from [swift-log](https://github.com/apple/swif
 ## Development
 
 - Build: `swift build`
+- Regenerate the checked-in SES SDK sources: `./scripts/regenerate-ses-sdk.sh`
 - Test:
-  - local: `make test`
+  - local using credentials from `.env`: `make test`
   - using Docker: `make docker-test`
+- Tests send messages through AWS SES. Copy `.env.example` to `.env` and set
+  valid credentials, region, sender, and recipient before running them.
 - Format: `make format`
 - Check: `make check`
 

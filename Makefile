@@ -41,8 +41,15 @@ fix-headers:
 	curl -s $(baseUrl)/check-swift-headers.sh | bash -s -- --fix
 	
 test:
+	@set -e; \
+	if [[ -f .env ]]; then set -a; source .env; set +a; fi; \
 	swift test --parallel
 	
 docker-test:
-	docker build -t tests . -f ./docker/tests/Dockerfile && docker run --rm tests
-
+	@set -e; \
+	if [[ -f .env ]]; then set -a; source .env; set +a; fi; \
+	for name in SES_ID SES_SECRET SES_REGION SES_FROM SES_TO; do \
+		if [[ -z "$${!name:-}" ]]; then echo "Missing $$name; set it in .env or the environment." >&2; exit 1; fi; \
+	done; \
+	docker build -t tests . -f ./docker/tests/Dockerfile; \
+	docker run --rm -e SES_ID -e SES_SECRET -e SES_REGION -e SES_FROM -e SES_TO tests
