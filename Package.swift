@@ -1,24 +1,21 @@
-// swift-tools-version:6.1
+// swift-tools-version:6.3
 import PackageDescription
 
-// NOTE: https://github.com/swift-server/swift-http-server/blob/main/Package.swift
-var defaultSwiftSettings: [SwiftSetting] = [
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0441-formalize-language-mode-terminology.md
+let swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0444-member-import-visibility.md
+    .strictMemorySafety(),
+    .treatAllWarnings(as: .error),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
-    // https://forums.swift.org/t/experimental-support-for-lifetime-dependencies-in-swift-6-2-and-beyond/78638
+    .enableUpcomingFeature("InferIsolatedConformances"),
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+    .enableUpcomingFeature("ImmutableWeakCaptures"),
+    .enableExperimentalFeature("SuppressedAssociatedTypes"),
+    .enableExperimentalFeature("LifetimeDependence"),
     .enableExperimentalFeature("Lifetimes"),
-    // https://github.com/swiftlang/swift/pull/65218
-    .enableExperimentalFeature("AvailabilityMacro=featherMailSES:macOS 15, iOS 18, watchOS 11, tvOS 18, visionOS 2"),
+    .enableUpcomingFeature("StrictConcurrency"),
 ]
-
-#if compiler(>=6.2)
-defaultSwiftSettings.append(
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0461-async-function-isolation.md
-    .enableUpcomingFeature("NonisolatedNonsendingByDefault")
-)
-#endif
 
 let package = Package(
     name: "feather-mail-ses",
@@ -35,38 +32,39 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-log", from: "1.14.0"),
         // [docc-plugin-placeholder]
-        .package(url: "https://github.com/soto-project/soto-core", from: "7.0.0"),
-        .package(url: "https://github.com/soto-project/soto-codegenerator", from: "7.0.0"),
+        .package(url: "https://github.com/soto-project/soto-core", from: "7.17.0"),
         .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-rc.1"),
     ],
     targets: [
         .target(
-            name: "FeatherGeneratedSES",
+            name: "FeatherSotoSES",
             dependencies: [
                 .product(name: "SotoCore", package: "soto-core"),
             ],
-            swiftSettings: defaultSwiftSettings,
-            plugins: [
-                .plugin(name: "SotoCodeGeneratorPlugin", package: "soto-codegenerator"),
-            ]
+            exclude: [
+                "sesv2-2019-09-27.json",
+                "soto.config.json",
+            ],
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "FeatherMailSES",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .target(name: "FeatherGeneratedSES"),
+                .target(name: "FeatherSotoSES"),
                 .product(name: "SotoCore", package: "soto-core"),
                 .product(name: "Logging", package: "swift-log"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "FeatherMailSESTests",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .target(name: "FeatherMailSES"),
+                .target(name: "FeatherSotoSES"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

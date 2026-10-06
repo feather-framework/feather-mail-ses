@@ -13,10 +13,10 @@ Amazon SES-backed mail client for Feather Mail.
 
 ## Requirements
 
-![Swift 6.1+](https://img.shields.io/badge/Swift-6%2E1%2B-F05138)
+![Swift 6.3+](https://img.shields.io/badge/Swift-6%2E3%2B-F05138)
 ![Platforms: Linux, macOS, iOS, tvOS, watchOS, visionOS](https://img.shields.io/badge/Platforms-Linux_%7C_macOS_%7C_iOS_%7C_tvOS_%7C_watchOS_%7C_visionOS-F05138)
 
-- Swift 6.1+
+- Swift 6.3+
 - Platforms:
   - Linux
   - macOS 15+
@@ -59,9 +59,12 @@ The package uses `Logger.current` from [swift-log](https://github.com/apple/swif
 ## Development
 
 - Build: `swift build`
+- Regenerate the checked-in SES SDK sources: `./scripts/regenerate-ses-sdk.sh`
 - Test:
-  - local: `make test`
+  - local using credentials from `.env`: `make test`
   - using Docker: `make docker-test`
+- Tests send messages through AWS SES. Copy `.env.example` to `.env` and set
+  valid credentials, region, sender, and recipient before running them.
 - Format: `make format`
 - Check: `make check`
 

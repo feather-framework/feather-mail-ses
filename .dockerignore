@@ -1,0 +1,10 @@
+.git
+.build
+.swiftpm
+Packages
+DerivedData
+*.xcodeproj
+.DS_Store
+.env
+.env.*
+!.env.example

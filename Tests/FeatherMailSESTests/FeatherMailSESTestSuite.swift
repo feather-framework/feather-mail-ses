@@ -8,7 +8,7 @@
 import Foundation
 import FeatherMail
 import FeatherMailSES
-import FeatherGeneratedSES
+import FeatherSotoSES
 import Logging
 import SotoCore
 import Testing
@@ -74,7 +74,14 @@ struct FeatherMailSESTestSuite {
                 )
             )
 
-            try await closure(client)
+            do {
+                try await closure(client)
+            }
+            catch {
+                try? await awsClient.shutdown()
+                throw error
+            }
+
             try await awsClient.shutdown()
         }
     }
