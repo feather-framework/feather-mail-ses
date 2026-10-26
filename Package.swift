@@ -31,9 +31,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log", from: "1.14.0"),
-        // [docc-plugin-placeholder]
         .package(url: "https://github.com/soto-project/soto-core", from: "7.17.0"),
-        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-rc.1"),
+        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-rc.2"),
     ],
     targets: [
         .target(
