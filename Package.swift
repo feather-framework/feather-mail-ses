@@ -27,18 +27,24 @@ let package = Package(
         .visionOS(.v2),
     ],
     products: [
-        .library(name: "FeatherMailSES", targets: ["FeatherMailSES"]),
+        .library(name: "FeatherMailSES", targets: ["FeatherMailSES"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log", from: "1.14.0"),
-        .package(url: "https://github.com/soto-project/soto-core", from: "7.17.0"),
-        .package(url: "https://github.com/feather-framework/feather-mail", exact: "1.0.0-rc.2"),
+        .package(
+            url: "https://github.com/soto-project/soto-core",
+            from: "7.17.0"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-mail",
+            exact: "1.0.0-rc.3"
+        ),
     ],
     targets: [
         .target(
             name: "FeatherSotoSES",
             dependencies: [
-                .product(name: "SotoCore", package: "soto-core"),
+                .product(name: "SotoCore", package: "soto-core")
             ],
             exclude: [
                 "sesv2-2019-09-27.json",
